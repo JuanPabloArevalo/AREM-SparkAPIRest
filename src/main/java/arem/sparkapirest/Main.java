@@ -12,7 +12,19 @@ package arem.sparkapirest;
 import static spark.Spark.*;
 
 public class Main {
+
     public static void main(String[] args) {
-        get("/hello", (req, res) -> "Hello World");
+        get("/cuadrado/:id", (req, res) -> {
+            String id = req.params(":id");
+            try{
+               long numero = Long.parseLong(id);
+               numero = numero*numero;
+               return String.valueOf(numero);
+            }catch(NumberFormatException e){
+                res.status(400);
+                return "El siguiente número es inválido: "+id;
+            }
+        });
     }
+
 }
