@@ -14,6 +14,7 @@ import static spark.Spark.*;
 public class Main {
 
     public static void main(String[] args) {
+        port(new Integer(System.getenv("PORT")));
         get("/cuadrado/:id", (req, res) -> {
             String id = req.params(":id");
             try{
