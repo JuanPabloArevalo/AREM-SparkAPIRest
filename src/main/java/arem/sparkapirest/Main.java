@@ -20,10 +20,9 @@ public class Main {
             try{
                long numero = Long.parseLong(id);
                numero = numero*numero;
-               res.type("application/json");
-                JSONObject obj = new JSONObject();
-                obj.append("numero", numero);
-               return obj;
+               res.type("text/html");
+               String a ="<!DOCTYPE html><html><head></head><body>HOLAAA</body></html>";                
+               return a;
             }catch(NumberFormatException e){
                 res.status(400);
                 return "El siguiente número es inválido: "+id;
