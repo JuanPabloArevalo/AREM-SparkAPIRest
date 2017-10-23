@@ -9,18 +9,21 @@ package arem.sparkapirest;
  *
  * @author JuanArevaloMerchan
  */
+import org.json.JSONObject;
 import static spark.Spark.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        port(new Integer(System.getenv("PORT")));
         get("/cuadrado/:id", (req, res) -> {
             String id = req.params(":id");
             try{
                long numero = Long.parseLong(id);
                numero = numero*numero;
-               return String.valueOf(numero);
+               res.type("application/json");
+                JSONObject obj = new JSONObject();
+                obj.append("numero", numero);
+               return obj;
             }catch(NumberFormatException e){
                 res.status(400);
                 return "El siguiente número es inválido: "+id;
