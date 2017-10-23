@@ -9,7 +9,6 @@ package arem.sparkapirest;
  *
  * @author JuanArevaloMerchan
  */
-import org.json.JSONObject;
 import static spark.Spark.*;
 
 public class Main {
@@ -20,9 +19,7 @@ public class Main {
             try{
                long numero = Long.parseLong(id);
                numero = numero*numero;
-               res.type("text/html");
-               String a ="<!DOCTYPE html><html><head></head><body>HOLAAA</body></html>";                
-               return a;
+               return String.valueOf(numero);
             }catch(NumberFormatException e){
                 res.status(400);
                 return "El siguiente número es inválido: "+id;
