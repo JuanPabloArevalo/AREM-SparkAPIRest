@@ -17,24 +17,34 @@ public class Main {
         port(getHerokuAssignedPort());
         get("/cuadrado/:id", (req, res) -> {
             String id = req.params(":id");
-            try{
-               long numero = Long.parseLong(id);
-               numero = numero*numero;
-               return String.valueOf(numero);
-            }catch(NumberFormatException e){
+            String accessControlRequestHeaders = req.headers("Access-Control-Request-Headers");
+            if (accessControlRequestHeaders != null) {
+                res.header("Access-Control-Allow-Headers", accessControlRequestHeaders);
+            }
+
+            String accessControlRequestMethod = req.headers("Access-Control-Request-Method");
+            if (accessControlRequestMethod != null) {
+                res.header("Access-Control-Allow-Methods", accessControlRequestMethod);
+            }
+
+            try {
+                long numero = Long.parseLong(id);
+                numero = numero * numero;
+                return String.valueOf(numero);
+
+            } catch (NumberFormatException e) {
                 res.status(400);
-                return "El siguiente número es inválido: "+id;
+                return "El siguiente número es inválido: " + id;
             }
         });
-    } 
-    
+    }
+
     static int getHerokuAssignedPort() {
         ProcessBuilder processBuilder = new ProcessBuilder();
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
         return 4567;
-}
-    
+    }
 
 }
